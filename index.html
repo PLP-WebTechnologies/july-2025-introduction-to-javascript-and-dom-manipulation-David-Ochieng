@@ -3,42 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mastering JavaScript Fundamentals</title>
+  <title>School Voting System</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>JavaScript Fundamentals Assignment</h1>
+  <h1>🏫 School Voting System</h1>
 
-  <!-- Part 1: Variables and Conditionals -->
+  <!-- Part 1: Eligibility Check -->
   <section>
-    <h2>Part 1: JavaScript Basics</h2>
-    <p id="userOutput">Enter your age below:</p>
-    <input type="number" id="ageInput" placeholder="Enter your age">
-    <button id="checkAgeBtn">Check Eligibility</button>
+    <h2>Eligibility Check</h2>
+    <p id="eligibilityMessage">Enter your year of study to check if you can vote:</p>
+    <input type="number" id="yearInput" min="1" max="6" placeholder="Enter year (1-6)">
+    <button id="checkBtn">Check Eligibility</button>
   </section>
 
-  <!-- Part 2: Functions -->
-  <section>
-    <h2>Part 2: Functions</h2>
-    <button id="greetBtn">Greet Me</button>
-    <p id="greetOutput"></p>
+  <!-- Part 2: Voting Area -->
+  <section id="votingSection" style="display:none;">
+    <h2>Vote for Your Candidate</h2>
+    <div id="candidateButtons"></div>
+    <p id="voteMessage"></p>
   </section>
 
-  <!-- Part 3: Loops -->
+  <!-- Part 3: Results -->
   <section>
-    <h2>Part 3: Loops</h2>
-    <button id="countdownBtn">Start Countdown</button>
-    <ul id="countdownList"></ul>
-  </section>
-
-  <!-- Part 4: DOM Manipulation -->
-  <section>
-    <h2>Part 4: DOM Interactions</h2>
-    <button id="toggleBtn">Toggle Highlight</button>
-    <p id="toggleText">This text will be highlighted when toggled.</p>
-
-    <button id="addItemBtn">Add List Item</button>
-    <ul id="dynamicList"></ul>
+    <h2>Results</h2>
+    <button id="showResultsBtn">Show Results</button>
+    <ul id="resultsList"></ul>
   </section>
 
   <script src="script.js"></script>

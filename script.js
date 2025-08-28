@@ -1,17 +1,25 @@
 // ================================
-// Part 1: Variables and Conditionals
+// Part 1: Variables + Conditionals
 // ================================
-let userAge; // variable to hold user input
+let userYear;
+let candidates = ["Dave", "Druski", "Janet", "Wanjiku", "Bradley"];
 
-document.getElementById("checkAgeBtn").addEventListener("click", () => {
-  userAge = parseInt(document.getElementById("ageInput").value);
+// Votes object initialized with 0 for each candidate
+let votes = {};
+candidates.forEach(c => votes[c] = 0);
 
-  if (isNaN(userAge)) {
-    document.getElementById("userOutput").textContent = "❌ Please enter a valid number!";
-  } else if (userAge >= 18) {
-    document.getElementById("userOutput").textContent = "✅ You are eligible to vote!";
+document.getElementById("checkBtn").addEventListener("click", () => {
+  userYear = parseInt(document.getElementById("yearInput").value);
+
+  if (isNaN(userYear) || userYear < 1 || userYear > 6) {
+    document.getElementById("eligibilityMessage").textContent = "❌ Enter a valid year between 1 and 6.";
+    document.getElementById("votingSection").style.display = "none";
+  } else if (userYear === 1) {
+    document.getElementById("eligibilityMessage").textContent = "⚠️ First years are NOT eligible to vote.";
+    document.getElementById("votingSection").style.display = "none";
   } else {
-    document.getElementById("userOutput").textContent = "⚠️ You are too young to vote.";
+    document.getElementById("eligibilityMessage").textContent = "✅ You are eligible to vote!";
+    document.getElementById("votingSection").style.display = "block";
   }
 });
 
@@ -19,62 +27,53 @@ document.getElementById("checkAgeBtn").addEventListener("click", () => {
 // Part 2: Functions
 // ================================
 
-// Function 1: Greet user
-function greetUser(name) {
-  return `Hello, ${name}! Welcome to JavaScript 🚀`;
+// Function 1: Cast vote
+function castVote(candidate) {
+  votes[candidate]++;
+  return `You voted for ${candidate}. Thank you!`;
 }
 
-// Function 2: Calculate square of a number
-function squareNumber(num) {
-  return num * num;
+// Function 2: Show results
+function showResults() {
+  let resultsList = document.getElementById("resultsList");
+  resultsList.innerHTML = "";
+
+  // Loop through votes object
+  for (let candidate in votes) {
+    let li = document.createElement("li");
+    li.textContent = `${candidate}: ${votes[candidate]} votes`;
+    resultsList.appendChild(li);
+  }
 }
-
-document.getElementById("greetBtn").addEventListener("click", () => {
-  const name = prompt("Enter your name:");
-  const greeting = greetUser(name || "Guest");
-  document.getElementById("greetOutput").textContent = greeting;
-
-  // Example of reusability — use the square function
-  console.log(`Square of 5 is: ${squareNumber(5)}`);
-});
 
 // ================================
 // Part 3: Loops
 // ================================
-
-// Example 1: Countdown using for loop
-document.getElementById("countdownBtn").addEventListener("click", () => {
-  const countdownList = document.getElementById("countdownList");
-  countdownList.innerHTML = ""; // clear old results
-
-  for (let i = 5; i >= 1; i--) {
-    const li = document.createElement("li");
-    li.textContent = `Countdown: ${i}`;
-    countdownList.appendChild(li);
-  }
-});
-
-// Example 2: Loop through an array
-const colors = ["Red", "Green", "Blue", "Yellow"];
-colors.forEach((color, index) => {
-  console.log(`Color ${index + 1}: ${color}`);
-});
+// Example: Display candidates in console
+candidates.forEach((c, i) => console.log(`Candidate ${i + 1}: ${c}`));
 
 // ================================
-// Part 4: DOM Manipulation
+// Part 4: DOM Interactions
 // ================================
 
-// Interaction 1: Toggle highlight
-document.getElementById("toggleBtn").addEventListener("click", () => {
-  document.getElementById("toggleText").classList.toggle("highlight");
+// Dynamically create candidate voting buttons
+let candidateButtonsDiv = document.getElementById("candidateButtons");
+candidates.forEach(candidate => {
+  let btn = document.createElement("button");
+  btn.textContent = `Vote for ${candidate}`;
+  btn.classList.add("voteBtn");
+  btn.addEventListener("click", () => {
+    const message = castVote(candidate);
+    document.getElementById("voteMessage").textContent = message;
+  });
+  candidateButtonsDiv.appendChild(btn);
 });
 
-// Interaction 2: Add new list item dynamically
-document.getElementById("addItemBtn").addEventListener("click", () => {
-  const newItem = document.createElement("li");
-  newItem.textContent = "New dynamic item";
-  document.getElementById("dynamicList").appendChild(newItem);
+// Show results button
+document.getElementById("showResultsBtn").addEventListener("click", () => {
+  showResults();
+  document.getElementById("resultsList").classList.toggle("highlight");
 });
 
-// Interaction 3: Change text content on page load
-document.getElementById("userOutput").textContent = "Welcome! Enter your age below:";
+// Extra DOM interaction: add a welcome message
+document.getElementById("eligibilityMessage").textContent = "👋 Welcome! Please enter your year of study.";
